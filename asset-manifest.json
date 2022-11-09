@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Multi-user-todo-list/static/css/main.e16278cd.css",
+    "main.js": "/Multi-user-todo-list/static/js/main.86e9343f.js",
+    "index.html": "/Multi-user-todo-list/index.html",
+    "main.e16278cd.css.map": "/Multi-user-todo-list/static/css/main.e16278cd.css.map",
+    "main.86e9343f.js.map": "/Multi-user-todo-list/static/js/main.86e9343f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e16278cd.css",
+    "static/js/main.86e9343f.js"
+  ]
+}
