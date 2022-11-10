@@ -1,12 +1,12 @@
 import { Suspense, useCallback, useState } from "react"
 import { Await, defer, useLoaderData, useNavigate } from "react-router-dom"
-import { get, patchData } from "../api/api"
+import { getData, patchData } from "../api/api"
 import { getUser } from "../App"
 
 export const loader = async ({ params: { id } }) => {
   const user = getUser()
   return defer({
-    note: get(`notes/${id}?userId=${user.id}`),
+    note: getData(`notes/${id}?userId=${user.id}`),
     id,
   })
 }

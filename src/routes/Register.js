@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { get, postData } from "../api/api"
+import { getData, postData } from "../api/api"
 import { getRandomString, getTimeString } from "../App"
 
 export default function Register() {
@@ -31,7 +31,7 @@ export default function Register() {
   }, [email, password, repeatPassword])
 
   const handleRegister = async () => {
-    const users = await get(`users?email=${email}`)
+    const users = await getData(`users?email=${email}`)
 
     if (users.length === 0) {
       console.log("true")

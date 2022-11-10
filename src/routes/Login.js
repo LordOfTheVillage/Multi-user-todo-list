@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { get } from "../api/api"
+import { getData } from "../api/api"
 import { useUserContext } from "../components/userContext"
 
 export default function Login() {
@@ -15,7 +15,7 @@ export default function Login() {
   const handleSetPassword = useCallback((e) => setPassword(e.target.value), [])
 
   const handleLogin = useCallback(() => {
-    get(`users?email=${email}&password=${password}`).then((users) => {
+    getData(`users?email=${email}&password=${password}`).then((users) => {
       if (users.length === 1) {
         userContext.setUser(users[0])
         setTimeout(() => navigate("/"), 500)

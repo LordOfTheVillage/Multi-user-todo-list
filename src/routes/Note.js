@@ -1,19 +1,12 @@
 import { Suspense } from "react"
 import { Await, defer, useLoaderData, useNavigate } from "react-router-dom"
-import { deleteData, get } from "../api/api"
+import { deleteData, getData } from "../api/api"
 import { deleteIcon, editIcon, getUser } from "../App"
-
-// async function getNote(id, userId) {
-//   const res = await fetch(
-//     `http://localhost:5000/notes?id=${id}&userId=${userId}`
-//   )
-//   return res.json()
-// }
 
 export const loader = async ({ params: { id } }) => {
   const user = getUser()
   return defer({
-    note: get(`notes?id=${id}&userId=${user.id}`),
+    note: getData(`notes?id=${id}&userId=${user.id}`),
     id,
   })
 }

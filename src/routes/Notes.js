@@ -1,13 +1,13 @@
 import { Suspense } from "react"
 import { Await, defer, useLoaderData, useNavigate } from "react-router-dom"
-import { get } from "../api/api"
-import { getUser } from '../App'
+import { getData } from "../api/api"
+import { getUser } from "../App"
 import Todo from "../components/Todo"
 
 export const loader = async () => {
   const { id } = getUser()
   return defer({
-    notes: get(`notes?userId=${id}`),
+    notes: getData(`notes?userId=${id}`),
   })
 }
 
