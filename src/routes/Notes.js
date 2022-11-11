@@ -7,7 +7,7 @@ import Todo from "../components/Todo"
 export const loader = async () => {
   const { id } = getUser()
   return defer({
-    notes: getData(`notes?userId=${id}`),
+    notes: getData(`notes?userId=${id}&_sort=createdAt&_order=DESC`),
   })
 }
 
