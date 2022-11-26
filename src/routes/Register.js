@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getData, postData } from "../api/api"
+import { getUserByEmail, postUser } from "../api/api"
 import { getRandomString, getTimeString } from "../App"
 
 export default function Register() {
@@ -31,10 +31,9 @@ export default function Register() {
   }, [email, password, repeatPassword])
 
   const handleRegister = async () => {
-    const users = await getData(`users?email=${email}`)
+    const users = await getUserByEmail()
 
     if (users.length === 0) {
-      console.log("true")
       const milsec = Date.now()
       const user = {
         id: milsec + getRandomString(),
@@ -43,11 +42,8 @@ export default function Register() {
         createdAt: getTimeString(milsec),
       }
 
-      postData("users", user)
-        .then(() => navigate("/login"))
-        .catch(() => alert("bad"))
+      postUser(user).then(() => navigate("/login"))
     } else {
-      console.log("hoo")
       setInvalid(true)
     }
   }

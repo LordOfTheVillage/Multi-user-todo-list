@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { postData } from "../api/api"
+import { postNote } from "../api/api"
 import { getRandomString, getTimeString, getUser } from "../App"
 
 export default function Create(props) {
@@ -28,7 +28,7 @@ export default function Create(props) {
       body,
       createdAt: getTimeString(milsec),
     }
-    postData("notes", note).then(() => navigate("/notes"))
+    postNote(note).then(() => navigate("/notes"))
   }
 
   const goBack = () => navigate(-1)

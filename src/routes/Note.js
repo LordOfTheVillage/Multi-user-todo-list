@@ -1,12 +1,12 @@
 import { Suspense } from "react"
 import { Await, defer, useLoaderData, useNavigate } from "react-router-dom"
-import { deleteData, getData } from "../api/api"
+import { getNote, deleteNote } from "../api/api"
 import { deleteIcon, editIcon, getUser } from "../App"
 
 export const loader = async ({ params: { id } }) => {
   const user = getUser()
   return defer({
-    note: getData(`notes?id=${id}&userId=${user.id}`),
+    note: getNote(id, user.id),
     id,
   })
 }
@@ -17,16 +17,16 @@ export default function Note(props) {
   const goBack = () => navigate(-1)
   const goToNotfoundedpage = () => navigate("/undefined")
   const goToEdit = () => navigate("./change")
-  const deleteNote = () => {
+  const handleDeleteNote = () => {
     const user = getUser()
-    deleteData(`notes/${id}?userId=${user.id}`).then(() => navigate("/notes"))
+    deleteNote(id, user.id).then(() => navigate("/notes"))
   }
   return (
     <Suspense fallback={<h3>Loading...</h3>}>
       <Await resolve={note}>
         {(resolved) => (
           <>
-            {resolved.length === 0 ? (
+            {!resolved.id ? (
               goToNotfoundedpage()
             ) : (
               <div className="flex flex-col items-center gap-8 p-5">
@@ -38,7 +38,7 @@ export default function Note(props) {
                     Go back
                   </button>
                   <h1 className="text-6xl font-medium text-center whitespace-normal break-words overflow-hidden">
-                    {resolved[0].title}
+                    {resolved.title}
                   </h1>
                   <div className="flex items-center justify-around">
                     <img
@@ -51,7 +51,7 @@ export default function Note(props) {
                       className="w-12 h-12 cursor-pointer"
                       src={deleteIcon}
                       alt="delete"
-                      onClick={deleteNote}
+                      onClick={handleDeleteNote}
                     />
                   </div>
                 </div>
@@ -59,7 +59,7 @@ export default function Note(props) {
                   <textarea
                     name="text"
                     disabled
-                    value={resolved[0].body}
+                    value={resolved.body}
                     className=" border border-gray-400 text-2xl px-10 pt-2 pb-3 h-96 w-full rounded-sm resize-none"
                   ></textarea>
                 </div>

@@ -1,24 +1,23 @@
+import { useCallback } from "react"
 import { useNavigate } from "react-router-dom"
-import { deleteData } from "../api/api"
+import { deleteNote } from "../api/api"
 import { deleteIcon, editIcon, getUser, normalizeDate } from "../App"
 
 export default function Todo(props) {
   const navigate = useNavigate()
-  const handleGetTime = (time) => {
+  const handleGetTime = useCallback((time) => {
     const date = new Date(time)
     return `
     ${normalizeDate(date.getDate())}.${normalizeDate(date.getMonth() + 1)}.${(
       date.getFullYear() + ""
     ).slice(2)}`
-  }
+  }, [])
 
   const goToEdit = () => navigate(`./${props.id}/change`)
   const goToNote = () => navigate(`./${props.id}`)
-  const deleteNote = () => {
+  const handleDeleteNote = () => {
     const user = getUser()
-    deleteData(`notes/${props.id}?userId=${user.id}`).then(() =>
-      navigate("/notes")
-    )
+    deleteNote(props.id, user.id).then(() => navigate("/notes"))
   }
 
   return (
@@ -37,7 +36,7 @@ export default function Todo(props) {
           className="w-8 h-8"
           src={deleteIcon}
           alt="delete"
-          onClick={deleteNote}
+          onClick={handleDeleteNote}
         />
       </div>
     </div>

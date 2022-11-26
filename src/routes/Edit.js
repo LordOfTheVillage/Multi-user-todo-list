@@ -1,12 +1,12 @@
 import { Suspense, useCallback, useState } from "react"
 import { Await, defer, useLoaderData, useNavigate } from "react-router-dom"
-import { getData, patchData } from "../api/api"
+import { getNote, patchNote } from "../api/api"
 import { getUser } from "../App"
 
 export const loader = async ({ params: { id } }) => {
   const user = getUser()
   return defer({
-    note: getData(`notes/${id}?userId=${user.id}`),
+    note: getNote(id, user.id),
     id,
   })
 }
@@ -33,9 +33,7 @@ export default function Edit(props) {
       title,
       body,
     }
-    patchData(`notes/${id}?userId=${user.id}`, note).then(() =>
-      navigate("/notes")
-    )
+    patchNote(id, user.id, note).then(() => navigate("/notes"))
   }
 
   const goBack = () => navigate(-1)
